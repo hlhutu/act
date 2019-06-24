@@ -1,33 +1,13 @@
 version: v1.0.0.DEV
 server:
-  port: 8081
-  #servlet:
-    #context-path: /activiti/
+  port: 8080
 
 spring:
-  thymeleaf:
-    cache: false
   datasource:
     url: jdbc:mysql://192.168.81.250/act?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      pool-name: Hikari-zim
-
-mybatis:
-  mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: com.zhu.**.bean
-
-redis:
-  max-total: 10
-  max-idle: 10
-  min-idle: 0
-  redis-list:
-    -
-      host: 192.168.5.120
-      port: 6379
-      auth: admin
 
 sys-default:
   admin-role:
