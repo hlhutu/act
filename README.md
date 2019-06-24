@@ -14,4 +14,5 @@
 ## 开始使用
 * 1.修改数据库配置，application-dev.yml
 * 2.启动程序，访问http://localhost:8080
-* 3.默认账号4个，其中2个属于SUPER_ADMIN角色：admin/admin，root/root，2个属于NORMAL角色：zim/zim,test/test
+<br>
+    默认账号4个，SUPER_ADMIN角色：admin/admin，root/root，NORMAL角色：zim/zim,test/test
