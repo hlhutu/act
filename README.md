@@ -8,3 +8,7 @@
 * 1.修改数据库配置，application-dev.yml
 * 2.访问http://localhost:8080
 * 3.默认账号4个，其中2个属于SUPER_ADMIN角色：admin/admin，root/root，2个属于NORMAL角色：zim/zim,test/test
+
+![首页](https://github.com/hlhutu/act/blob/master/src/main/resources/static/img/1.png)
+![流程图列表](https://github.com/hlhutu/act/blob/master/src/main/resources/static/img/2.png)
+![流程图绘制](https://github.com/hlhutu/act/blob/master/src/main/resources/static/img/3.png)
