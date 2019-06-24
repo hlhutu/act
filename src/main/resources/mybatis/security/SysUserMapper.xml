@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.z.act.core.security.mapper.SysUserMapper">
+
+    <resultMap id="sysUserResultMap" type="com.z.act.core.security.bean.SysUser">
+        <id column="user_name" property="userName" />
+        <result column="user_alias" property="userAlias" />
+        <result column="user_pwd" property="userPwd" />
+        <collection property="roles" ofType="com.z.act.core.security.bean.SysRole" select="queryRolesByUserName" column="user_name"/>
+    </resultMap>
+    <select id="queryRolesByUserName" parameterType="java.lang.String" resultType="com.z.act.core.security.bean.SysRole">
+        select role_name roleName from sys_user_role where user_name=#{userName};
+    </select>
+
+    <select id="queryUser" parameterType="com.z.act.core.security.bean.SysUser" resultMap="sysUserResultMap">
+        select user_name, user_alias, user_pwd
+        from sys_user where 1=1
+        <if test="userName!=null">
+            and user_name=#{userName}
+        </if>
+        <if test="userPwd!=null">
+            and user_pwd=#{userPwd}
+        </if>
+        limit 0,1
+    </select>
+
+    <select id="queryUserByUsername" parameterType="com.z.act.core.security.bean.SysUser" resultMap="sysUserResultMap">
+        select user_name, user_alias, user_pwd
+        from sys_user where user_name=#{userName}
+        limit 0,1
+    </select>
+
+    <insert id="insertUser" parameterType="com.z.act.core.security.bean.SysUser">
+        insert into sys_user(user_name, user_alias, user_pwd)
+        values(#{userName}, #{userAlias}, #{userPwd});
+        <if test="roles!=null and roles.size()>0">
+            <foreach collection="roles" item="arole" separator=";">
+                insert into sys_user_role(user_name, role_name)
+                values(#{userName}, #{arole.roleName})
+            </foreach>
+        </if>
+    </insert>
+</mapper>

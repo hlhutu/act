@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="utf-8">
+    <title>我的已</title>
+    <style>
+        .nav a{
+            margin-left: 5px;
+        }
+        a.active{
+            color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <a th:href="@{'/'}">首页</a>
+    <a th:href="@{'/model'}">流程图管理</a>
+    <a th:href="@{'/procdef'}">流程定义管理</a>
+    <a th:href="@{'/procinst'}">流程实例管理</a>
+    <a th:href="@{'/procinst/hist'}">流程实例管理（历史）</a>
+    <a th:href="@{'/task/mine'}">我的待办</a>
+    <a th:href="@{'/task/hist'}" class="active">我的已办</a>
+</div>
+
+<h2>流程实例管理</h2>
+
+<table style="width: 100%;">
+    <thead>
+    <tr style="text-align: left;">
+        <th>任务id</th>
+        <th>任务名</th>
+        <th>描述</th>
+        <th>开始时间</th>
+        <th>结束时间d</th>
+        <th>处理人</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="hist : ${histTasks}">
+        <td th:text="${hist.id}">任务id</td>
+        <td th:text="${hist.name}">任务名</td>
+        <td th:text="${hist.description}">任务的描述</td>
+        <td th:text="${#dates.format(hist.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-10-10 00:00:00</td>
+        <td th:text="${#dates.format(hist.endTime,'yyyy-MM-dd HH:mm:ss')}">2018-10-10 00:00:00</td>
+        <td th:text="${hist.assignee}">处理人</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

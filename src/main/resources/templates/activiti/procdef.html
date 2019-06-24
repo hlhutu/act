@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="utf-8">
+    <title>流程定义管理</title>
+    <style>
+        .nav a{
+            margin-left: 5px;
+        }
+        a.active{
+            color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <a th:href="@{'/'}">首页</a>
+    <a th:href="@{'/model'}">流程图管理</a>
+    <a th:href="@{'/procdef'}" class="active">流程定义管理</a>
+    <a th:href="@{'/procinst'}">流程实例管理</a>
+    <a th:href="@{'/procinst/hist'}">流程实例管理（历史）</a>
+    <a th:href="@{'/task/mine'}">我的待办</a>
+    <a th:href="@{'/task/hist'}">我的已办</a>
+</div>
+
+<h2>流程定义管理</h2>
+
+<table style="width: 100%;">
+    <thead>
+        <tr style="text-align: left;">
+            <th>key</th>
+            <th>流程定义名</th>
+            <th>版本</th>
+            <th>描述</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="procdef : ${procdefs}">
+            <td th:text="${procdef.key}">9527</td>
+            <td th:text="${procdef.name}">我是一个流程定义名</td>
+            <td th:text="${procdef.version}">9527</td>
+            <td th:text="${procdef.description}">这是一段流程定义的描述</td>
+            <td>
+                <a th:href="@{'/procdef/modelpng'(procdefId=${procdef.id})}">查看流程图</a>
+                <a th:href="@{'/procdef/start'(procdefKey=${procdef.key})}">启动</a>
+                <a th:href="@{'/procdef/delete'(deployId=${procdef.deploymentId})}">删除</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

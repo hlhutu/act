@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="utf-8">
+    <title>流程实例管理</title>
+    <style>
+        .nav a{
+            margin-left: 5px;
+        }
+        a.active{
+            color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <a th:href="@{'/'}">首页</a>
+    <a th:href="@{'/model'}">流程图管理</a>
+    <a th:href="@{'/procdef'}">流程定义管理</a>
+    <a th:href="@{'/procinst'}">流程实例管理</a>
+    <a th:href="@{'/procinst/hist'}" class="active">流程实例管理（历史）</a>
+    <a th:href="@{'/task/mine'}">我的待办</a>
+    <a th:href="@{'/task/hist'}">我的已办</a>
+</div>
+
+<h2>流程实例管理</h2>
+
+<table style="width: 100%;">
+    <thead>
+        <tr style="text-align: left;">
+            <th>实例id</th>
+            <th>实例名</th>
+            <th>流程定义key</th>
+            <th>流程定义名</th>
+            <th>流程定义版本</th>
+            <th>描述</th>
+            <th>删除原因</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="hist : ${histProcinsts}">
+            <td th:text="${hist.id}">实例id</td>
+            <td th:text="${hist.name}">实例名</td>
+            <td th:text="${hist.processDefinitionId}">流程定义key</td>
+            <td th:text="${hist.processDefinitionName}">流程定义名</td>
+            <td th:text="${hist.processDefinitionVersion}">流程定义版本</td>
+            <td th:text="${hist.description}">这是一段流程实例的描述</td>
+            <td th:text="${hist.deleteReason}">删除原因</td>
+            <td>
+                <a th:href="@{'/procinst/modelpng'(procinstId=${hist.id}, procdefId=${hist.processDefinitionId})}">查看流程图</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="utf-8">
+    <title>流程图管理</title>
+    <style>
+        .warn{
+            font-weight: bold;
+            color: red;
+        }
+        .nav a{
+            margin-left: 5px;
+        }
+        a.active{
+            color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <a th:href="@{'/'}">首页</a>
+    <a th:href="@{'/model'}" class="active">流程图管理</a>
+    <a th:href="@{'/procdef'}">流程定义管理</a>
+    <a th:href="@{'/procinst'}">流程实例管理</a>
+    <a th:href="@{'/procinst/hist'}">流程实例管理（历史）</a>
+    <a th:href="@{'/task/mine'}">我的待办</a>
+    <a th:href="@{'/task/hist'}">我的已办</a>
+</div>
+
+<h2>流程图管理</h2>
+<div class="nav">
+    <a th:href="@{'/model/create'(key='newmodel', name='新建流程图')}">新建流程图</a>
+</div>
+
+<table style="width: 100%;">
+    <thead>
+        <tr style="text-align: left;">
+            <th>key</th>
+            <th>流程图名</th>
+            <th>版本</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="model : ${models}">
+            <td th:text="${model.key}">9527</td>
+            <td th:text="${model.name}">测试流程图</td>
+            <td th:text="${model.version}">9527</td>
+            <td th:text="${#dates.format(model.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-02-20 10:11:00</td>
+            <td>
+                <span th:if="${!model.hasEditorSourceExtra()}" class="warn">流程图未保存</span>
+                <a th:if="${model.hasEditorSourceExtra()}" th:href="@{'/model/deploy'(modelId=${model.id}, modelKey=${model.key})}">部署</a>
+            </td>
+            <td>
+                <a th:href="@{'/model/editor'(modelId=${model.id})}">编辑</a>
+                <a th:href="@{'/model/delete'(modelId=${model.id})}">删除</a>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
