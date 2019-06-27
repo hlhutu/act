@@ -56,7 +56,7 @@ public class ProcdefController {
     @RequestMapping("delete")
     public RestResult delete(String deployId){
         repositoryService.deleteDeployment(deployId, true);
-        return new RestResult("删除流程定义成功");
+        return new RestResult().success("删除流程定义成功");
     }
 
     /**
@@ -67,7 +67,7 @@ public class ProcdefController {
     @RequestMapping("start")
     public RestResult start(String procdefKey){
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(procdefKey);
-        return new RestResult("启动流程成功").setData(processInstance.getId());
+        return new RestResult().success("启动流程成功").setData(processInstance.getId());
     }
 
     /**

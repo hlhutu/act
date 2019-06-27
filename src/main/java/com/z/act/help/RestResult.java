@@ -1,24 +1,37 @@
 package com.z.act.help;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
+@ApiModel(description = "通用的返回格式")
 public class RestResult implements Serializable {
-    private boolean success = true;
-    private String msg = null;
-    private Object data = null;
+    @ApiModelProperty("是否成功")
+    private boolean success;
+    @ApiModelProperty("提示信息")
+    private String msg;
+    @ApiModelProperty("返回的数据")
+    private Object data;
 
-    public RestResult(){
+    public RestResult success(){
+        this.success = true;
+        return this;
     }
-
-    public RestResult(String msg){
+    public RestResult fail(){
+        this.success = false;
+        return this;
+    }
+    public RestResult success(String msg){
+        this.success = true;
         this.msg = msg;
+        return this;
     }
-
-    public RestResult(String msg, boolean success){
+    public RestResult fail(String msg){
+        this.success = false;
         this.msg = msg;
-        this.success = success;
+        return this;
     }
-
     public RestResult setData(Object data){
         this.data = data;
         return this;

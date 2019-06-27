@@ -67,6 +67,6 @@ public class TaskController {
         task.setAssignee(userDetails.getUsername());//将处理人改为当前用户
         taskService.saveTask(task);
         taskService.complete(taskId);
-        return new RestResult("任务已完成");
+        return new RestResult().success("任务已完成");
     }
 }

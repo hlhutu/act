@@ -3,6 +3,10 @@ package com.z.act.activiti.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.z.act.help.RestResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
@@ -15,10 +19,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +33,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("model")
+@Api(tags = {"流程图"})
 public class ModelController {
     private static final Logger logger = LogManager.getLogger(ModelController.class);
 
@@ -66,7 +71,12 @@ public class ModelController {
      * @param key 流程图key，在创建之前输入
      * @throws IOException
      */
-    @RequestMapping(value = "create/{name}/{key}")
+    @RequestMapping(value = "create/{name}/{key}", method = RequestMethod.GET)
+    @ApiOperation(value = "创建空的流程图，并跳转倒编辑页面", notes = "空流程图无法直接部署")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="name", value="流程图名")
+            ,@ApiImplicitParam(name="key", value="流程图的key")
+    })
     public void create(HttpServletResponse response, @PathVariable String name, @PathVariable String key) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode editorNode = objectMapper.createObjectNode();
@@ -99,7 +109,7 @@ public class ModelController {
     @RequestMapping(value = "delete")
     public RestResult delete(String modelId){
         repositoryService.deleteModel(modelId);
-        return new RestResult("删除流程图成功");
+        return new RestResult().success("删除流程图成功");
     }
 
     /**
@@ -114,6 +124,6 @@ public class ModelController {
         Deployment deployment = repositoryService.createDeployment()
                 .addBpmnModel(modelKey + ".bpmn20.xml", bpmnModel)
                 .deploy();
-        return new RestResult("部署流程图成功").setData(deployment.getId());
+        return new RestResult().success().setData(deployment.getId());
     }
 }

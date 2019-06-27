@@ -73,7 +73,7 @@ public class ProcinstController {
     @RequestMapping("delete")
     public RestResult delete(String procinstId, String reason){
         runtimeService.deleteProcessInstance(procinstId, reason);
-        return new RestResult("删除流程实例成功");
+        return new RestResult().success("删除流程实例成功");
     }
 
     /**
