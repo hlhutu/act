@@ -1,7 +1,7 @@
 #端口号
 version: v1.0.0.DEV
 server:
-  port: 8081
+  port: 8082
 
 spring:
   activiti:
@@ -53,30 +53,30 @@ mybatis:
 
 logging:
   level:
-    com.z.act.core.security.mapper: info
+    com.z.act.core.security.mapper: debug
 
 sys-default:
   admin-role:
-    -
-      role-name: 超级管理员
-    -
-      role-name: SUPER_ADMIN
+  -
+    role-name: 超级管理员
+  -
+    role-name: SUPER_ADMIN
   admin-user:
-    -
-      user-name: admin
-      user-alias: 超管
-      user-pwd: admin
-    - user-name: root
-      user-alias: root
-      user-pwd: root
+  -
+    user-name: admin
+    user-alias: 超管
+    user-pwd: admin
+  - user-name: root
+    user-alias: root
+    user-pwd: root
   test-role:
-    -
-      role-name: NORMAL
+  -
+    role-name: NORMAL
   test-user:
-    -
-      user-name: zim
-      user-alias: 普通人
-      user-pwd: zim
-    - user-name: test
-      user-alias: 测试用户
-      user-pwd: test
+  -
+    user-name: zim
+    user-alias: 普通人
+    user-pwd: zim
+  - user-name: test
+    user-alias: 测试用户
+    user-pwd: test

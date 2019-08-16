@@ -1,25 +1,21 @@
 package com.z.act;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.*;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.Execution;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ActApplicationTests {
+
+    Logger logger = LogManager.getRootLogger();
 
     @Test
     public void contextLoads(){
@@ -50,9 +46,6 @@ public class ActApplicationTests {
     private ManagementService managementService;//整体管理服务
 
     @Test
-    public void deploy() {//部署一个流程图
-        /*List<Execution> exes = runtimeService.createExecutionQuery().processDefinitionKey("dbgd");
-        for(Execution exe : exes){
-        }*/
+    public void deploy() throws IOException {//部署一个流程图
     }
 }

@@ -3,12 +3,3 @@ author: zhu
 spring:
   profiles:
     active: dev
-  activiti:
-    check-process-definitions: false
-    database-schema-update: false
-  thymeleaf:
-    cache: false
-
-mybatis:
-  mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: com.**.bean
