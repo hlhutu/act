@@ -43,6 +43,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     default-property-inclusion: NON_NULL
+    time-zone: GMT+8
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
@@ -66,7 +67,8 @@ sys-default:
       user-name: admin
       user-alias: 超管
       user-pwd: admin
-    - user-name: root
+    -
+      user-name: root
       user-alias: root
       user-pwd: root
   test-role:
@@ -77,6 +79,42 @@ sys-default:
       user-name: zim
       user-alias: 普通人
       user-pwd: zim
-    - user-name: test
+    -
+      user-name: test
       user-alias: 测试用户
       user-pwd: test
+  chain:
+    -
+      name: PointDispatcher
+      required: false
+    -
+      name: SwimlaneDispatcher
+      required: false
+    -
+      name: OnlineDispatcher
+      required: true
+    -
+      name: AcceptLimitDispatcher
+      required: true
+    -
+      name: CurrentTaskDispatcher
+      required: true
+
+dispatcher:
+  accept-limit: 5 #接单上限
+  chain:
+    -
+      name: PointDispatcher #指定处理人
+      required: false
+    -
+      name: SwimlaneDispatcher #泳道
+      required: false
+    -
+      name: OnlineDispatcher #筛选在线的用户
+      required: true
+    -
+      name: AcceptLimitDispatcher #筛选满足接单上限的用户
+      required: true
+    -
+      name: CurrentTaskDispatcher #筛选当前待办数最少的用户
+      required: true
