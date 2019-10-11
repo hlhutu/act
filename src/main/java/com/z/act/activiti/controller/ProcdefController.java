@@ -11,6 +11,7 @@ import org.activiti.image.ProcessDiagramGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ import java.util.List;
  * 流程定义管理，流程定义由流程图部署后产生
  */
 @RestController
-@RequestMapping("procdef")
+@RequestMapping
 public class ProcdefController {
     private static final Logger logger = LogManager.getLogger(ProcdefController.class);
 
@@ -40,7 +41,7 @@ public class ProcdefController {
      * 视图，流程定义管理页面
      * @return
      */
-    @RequestMapping
+    @GetMapping("procdef")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("activiti/procdef");
         List<ProcessDefinition> procdefs = repositoryService.createProcessDefinitionQuery().orderByDeploymentId().desc().list();
@@ -53,7 +54,7 @@ public class ProcdefController {
      * @param deployId
      * @return
      */
-    @RequestMapping("delete")
+    @RequestMapping("procdef/delete")
     public RestResult delete(String deployId){
         repositoryService.deleteDeployment(deployId, true);
         return new RestResult().success("删除流程定义成功");
@@ -64,7 +65,7 @@ public class ProcdefController {
      * @param procdefKey
      * @return
      */
-    @RequestMapping("start")
+    @RequestMapping("procdef/start")
     public RestResult start(String procdefKey){
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(procdefKey);
         return new RestResult().success("启动流程成功").setData(processInstance.getId());
@@ -75,15 +76,15 @@ public class ProcdefController {
      * @param procdefId
      * @return
      */
-    @RequestMapping("modelpng")
+    @RequestMapping("procdef/modelpng")
     public void model(String procdefId, HttpServletResponse response) throws IOException {
         BpmnModel bpmnModel = repositoryService.getBpmnModel(procdefId);
         ProcessDiagramGenerator processDiagramGenerator = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator();
 
         InputStream diagram = processDiagramGenerator.generateDiagram(
-                bpmnModel,"png", new ArrayList<>(), new ArrayList<>(),"黑体","黑体","黑体",null,0);
+                bpmnModel,"jpg", new ArrayList<>(), new ArrayList<>(),"黑体","黑体","黑体",null,1);
 
-        response.setContentType("image/png");//以png形式输出
+        response.setContentType("image/jpg");//以png形式输出
         byte[] b = new byte[1024];
         int len;
         while ((len = diagram.read(b, 0, 1024)) != -1) {

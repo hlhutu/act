@@ -32,7 +32,7 @@ import java.util.List;
  * 流程图管理
  */
 @RestController
-@RequestMapping("model")
+@RequestMapping
 @Api(tags = {"流程图"})
 public class ModelController {
     private static final Logger logger = LogManager.getLogger(ModelController.class);
@@ -45,7 +45,7 @@ public class ModelController {
      * 需要一个参数，modelId：设计的流程图id
      * @return
      */
-    @RequestMapping("editor")
+    @RequestMapping("model/editor")
     public ModelAndView modeler(){
         ModelAndView mav = new ModelAndView("activiti/modeler");
         return mav;
@@ -56,7 +56,7 @@ public class ModelController {
      * models：已创建的流程图列表
      * @return
      */
-    @RequestMapping
+    @RequestMapping("model")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("activiti/model");
         List<Model> models = repositoryService.createModelQuery().orderByLastUpdateTime().desc().list();
@@ -71,7 +71,7 @@ public class ModelController {
      * @param key 流程图key，在创建之前输入
      * @throws IOException
      */
-    @RequestMapping(value = "create/{name}/{key}", method = RequestMethod.GET)
+    @RequestMapping(value = "model/create/{name}/{key}", method = RequestMethod.GET)
     @ApiOperation(value = "创建空的流程图，并跳转倒编辑页面", notes = "空流程图无法直接部署")
     @ApiImplicitParams({
             @ApiImplicitParam(name="name", value="流程图名")
@@ -84,7 +84,7 @@ public class ModelController {
         editorNode.put("resourceId", "canvas");
         ObjectNode stencilSetNode = objectMapper.createObjectNode();
         stencilSetNode.put("namespace", "http://b3mn.org/stencilset/bpmn2.0#");
-        editorNode.put("stencilset", stencilSetNode);
+        editorNode.putPOJO("stencilset", stencilSetNode);
         Model modelData = repositoryService.newModel();
 
         ObjectNode modelObjectNode = objectMapper.createObjectNode();
@@ -106,7 +106,7 @@ public class ModelController {
      * @param modelId
      * @return
      */
-    @RequestMapping(value = "delete")
+    @RequestMapping(value = "model/delete")
     public RestResult delete(String modelId){
         repositoryService.deleteModel(modelId);
         return new RestResult().success("删除流程图成功");
@@ -117,7 +117,7 @@ public class ModelController {
      * @param modelId
      * @return 部署后的流程定义
      */
-    @RequestMapping(value = "deploy")
+    @RequestMapping(value = "model/deploy")
     public RestResult deploy(String modelId, String modelKey) throws IOException {
         ObjectNode modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelId));
         BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);

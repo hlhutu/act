@@ -48,7 +48,10 @@
         <td th:text="${task.processInstanceId}">实例id</td>
         <td th:text="${task.processDefinitionId}">定义id</td>
         <td>
-            <a th:href="@{'/task/complate'(taskId=${task.id})}">完成</a>
+            <a th:href="@{'/procinst/modelpng'(procinstId=${task.processInstanceId}, procdefId=${task.processDefinitionId})}">查看流程图</a>
+            <a th:href="@{'/complete/task/'+${task.id}}">完成</a>
+            <a th:href="@{'/back/task/'+${task.id}}">回退</a>
+            <a th:href="@{'/reject/task/'+${task.id}}">驳回</a>
         </td>
     </tr>
     </tbody>

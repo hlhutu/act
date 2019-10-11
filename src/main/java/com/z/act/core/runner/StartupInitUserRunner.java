@@ -54,9 +54,6 @@ public class StartupInitUserRunner implements CommandLineRunner {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void run(String... args) throws Exception {
-        logger.info("管理员角色：{}", adminRole);
-        logger.info("管理员用户：{}", adminUser);
-        logger.info("chain：{}", chain);
         //初始化表结构
         initDatabaseSchema();
         //初始化测试用户

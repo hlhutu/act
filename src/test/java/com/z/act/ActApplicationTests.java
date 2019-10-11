@@ -47,5 +47,12 @@ public class ActApplicationTests {
 
     @Test
     public void deploy() throws IOException {//部署一个流程图
+        historyService.createHistoricProcessInstanceQuery().list().forEach(hist->{
+            runtimeService.deleteProcessInstance(hist.getId(), "系统原因");
+            historyService.deleteHistoricProcessInstance(hist.getId());
+        });
+        repositoryService.createProcessDefinitionQuery().list().forEach(procDef->{
+           repositoryService.deleteDeployment(procDef.getDeploymentId(), true);
+        });
     }
 }
