@@ -4,6 +4,10 @@ server:
   port: 8081
 
 spring:
+  devtools:
+    restart:
+      enabled: true
+
   activiti:
     check-process-definitions: false
     database-schema-update: true

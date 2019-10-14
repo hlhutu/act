@@ -1,4 +1,4 @@
-package com.z.act.activiti.service;
+package com.z.act.activiti.plugins;
 
 import org.activiti.bpmn.model.FlowElement;
 import org.activiti.engine.ActivitiEngineAgenda;

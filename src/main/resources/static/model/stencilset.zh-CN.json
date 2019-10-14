@@ -128,7 +128,15 @@
           "id": "executionlisteners",
           "type": "multiplecomplex",
           "title": "执行监听器",
-          "value": "",
+          "value": {
+            "executionListeners": [{
+              "event": "start",
+              "implementation": "MyExeListener",
+              "className": "com.z.act.activiti.plugins.listener.MyExeListener",
+              "expression": "",
+              "delegateExpression": ""
+            }]
+          },
           "description": "Listeners for an activity, process, sequence flow, start and end event.",
           "popular": true
         }
@@ -141,7 +149,27 @@
           "id": "tasklisteners",
           "type": "multiplecomplex",
           "title": "任务监听器",
-          "value": "",
+          "value": {
+            "taskListeners": [{
+              "event": "create",
+              "implementation": "AssigneeTaskListener",
+              "className": "com.z.act.activiti.plugins.listener.AssigneeTaskListener",
+              "expression": "",
+              "delegateExpression": ""
+            },{
+              "event": "assignment",
+              "implementation": "NotifyTaskListener",
+              "className": "com.z.act.activiti.plugins.listener.NotifyTaskListener",
+              "expression": "",
+              "delegateExpression": ""
+            },{
+              "event": "delete",
+              "implementation": "NotifyTaskListener",
+              "className": "com.z.act.activiti.plugins.listener.NotifyTaskListener",
+              "expression": "",
+              "delegateExpression": ""
+            }]
+          },
           "description": "Listeners for a user task",
           "popular": true
         }
@@ -170,6 +198,20 @@
           "value": "",
           "description": "Assignment definition for the user task",
           "popular": true
+        }
+      ]
+    },
+    {
+      "name": "singleAssignpackage",
+      "properties": [
+        {
+          "id": "singleAssign",
+          "type": "Boolean",
+          "title": "是否派单",
+          "value": "true",
+          "description": "派单的任务将会根据规则选择一个人，将任务分配给他",
+          "popular": true,
+          "refToView": "compensation"
         }
       ]
     },
@@ -1079,6 +1121,7 @@
         "multiinstance_conditionpackage",
         "isforcompensationpackage",
         "usertaskassignmentpackage",
+        "singleAssignpackage",
         "tasklistenerspackage",
         "duedatedefinitionpackage",
         "prioritydefinitionpackage",

@@ -1,5 +1,6 @@
 package com.z.act.activiti.service;
 
+import com.z.act.activiti.plugins.JumpCmd;
 import com.z.act.help.RestResult;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
@@ -8,11 +9,9 @@ import org.activiti.engine.ManagementService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

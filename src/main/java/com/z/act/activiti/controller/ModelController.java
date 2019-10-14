@@ -2,6 +2,7 @@ package com.z.act.activiti.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.z.act.activiti.plugins.CustomBpmnJsonConverter;
 import com.z.act.help.RestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -9,7 +10,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
-import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
@@ -120,7 +120,9 @@ public class ModelController {
     @RequestMapping(value = "model/deploy")
     public RestResult deploy(String modelId, String modelKey) throws IOException {
         ObjectNode modelNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelId));
-        BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
+        CustomBpmnJsonConverter bpmnJsonConverter = new CustomBpmnJsonConverter();
+        //CustomUserTaskJsonConverter.fillTypes(CustomBpmnJsonConverter.convertersToBpmnMap, CustomBpmnJsonConverter.convertersToJsonMap);
+        BpmnModel bpmnModel = bpmnJsonConverter.convertToBpmnModel(modelNode);
         Deployment deployment = repositoryService.createDeployment()
                 .addBpmnModel(modelKey + ".bpmn20.xml", bpmnModel)
                 .deploy();
